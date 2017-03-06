@@ -35,6 +35,7 @@ func (p *Parser) Parse(tokenString string, keyFunc Keyfunc) (*Token, error) {
 	if err = json.Unmarshal(headerBytes, &token.Header); err != nil {
 		return token, &ValidationError{Inner: err, Errors: ValidationErrorMalformed}
 	}
+	token.RawHeader = headerBytes
 
 	// parse Claims
 	var claimBytes []byte
@@ -48,6 +49,7 @@ func (p *Parser) Parse(tokenString string, keyFunc Keyfunc) (*Token, error) {
 	if err = dec.Decode(&token.Claims); err != nil {
 		return token, &ValidationError{Inner: err, Errors: ValidationErrorMalformed}
 	}
+	token.RawClaims = claimBytes
 
 	// Lookup signature method
 	if method, ok := token.Header["alg"].(string); ok {

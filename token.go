@@ -25,9 +25,11 @@ type Token struct {
 	Raw       string                 // The raw token.  Populated when you Parse a token
 	Method    SigningMethod          // The signing method used or to be used
 	Header    map[string]interface{} // The first segment of the token
+	RawHeader []byte
 	Claims    map[string]interface{} // The second segment of the token
-	Signature string                 // The third segment of the token.  Populated when you Parse a token
-	Valid     bool                   // Is the token valid?  Populated when you Parse/Verify a token
+	RawClaims []byte
+	Signature string // The third segment of the token.  Populated when you Parse a token
+	Valid     bool   // Is the token valid?  Populated when you Parse/Verify a token
 }
 
 // Create a new Token.  Takes a signing method
